@@ -8,6 +8,7 @@ class DNA():
         self.n_individuals = n_individuals
         self.n_selection = n_selection
         self.n_generations = n_generations
+        self.verbose = verbose
     
     def create_individual(self, min  = 0, max = 9):
         individual = [np.random.randint(min, max) for i in range(len(self.target))]
@@ -26,7 +27,7 @@ class DNA():
     
     def selection(self, population): #Metodo todos vs todos
         scores = [(self.fitness(i), i) for i in population]
-        scores = [(i[0], i[1]) for i in sorted(scores)]
+        scores = [i[1] for i in sorted(scores)]
 
         selected = scores[len(scores) - self.n_selection :]
         return selected
@@ -54,13 +55,30 @@ class DNA():
                     new_value = np.random.randint(0, 9)
 
                 population[i][point] = new_value
-                
-        return population   
+
+        return population
+    
+    def run_geneticalgo(self):
+        population = self.create_population()
+        for i in range(self.n_generations):
+            if self.verbose:
+                print("________________________")
+                print("Generacion: ", i)
+                print("population: ", population)
+
+            selected = self.selection(population)
+            population = self.crossover(population, selected)
+            population = self.mutation(population)
                      
 def main():
     target = [1, 0, 0, 1 ,0 ,1 ,1]
-    model = DNA(target = target, mutation_rate = 0.02, n_individuals = 15, n_selection= 5, n_generations = 50, verbose= False)
-    model.selection(model.create_population())
+    model = DNA(target = target, 
+                mutation_rate = 0.2, 
+                n_individuals = 15, 
+                n_selection= 5, 
+                n_generations = 50, 
+                verbose= True)
+    model.run_geneticalgo()
 
 if __name__ == "__main__":
     main()
