@@ -24,12 +24,25 @@ class DNA():
                 fitness += 1
         return fitness
     
-    def selection(self, population):
+    def selection(self, population): #Metodo todos vs todos
         scores = [(self.fitness(i), i) for i in population]
         scores = [(i[0], i[1]) for i in sorted(scores)]
 
         selected = scores[len(scores) - self.n_selection :]
-        print(selected)
+        return selected
+    
+    def crossover(self, population, selected): #Metodo de cruce punto a punto
+        point = 0
+        father = []
+
+        for i in range(len(population)):
+            point = np.random.randint(1, len(self.target) - 1)
+            father = random.sample(selected, 2)
+            
+            population[i][:point] = father[0][:point]
+            population[i][point:] = father[1][point:]
+
+            return population
 
 def main():
     target = [1, 0, 0, 1 ,0 ,1 ,1]
