@@ -22,12 +22,15 @@ class DNA():
         for i in range(len(individual)):
             if individual[i] == self.target[i]:
                 fitness += 1
-        print(fitness)
+        return fitness
+    
+    def selection(self, population):
+        scores = [(self.fitness(i), i) for i in population]
 
 def main():
     target = [1, 0, 0, 1 ,0 ,1 ,1]
     model = DNA(target = target, mutation_rate = 0.02, n_individuals = 15, n_selection= 5, n_generations = 50, verbose= False)
-    model.fitness(model.create_individual())
+    model.selection(model.create_population())
 
 if __name__ == "__main__":
     main()
