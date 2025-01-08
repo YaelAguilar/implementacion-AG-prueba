@@ -26,6 +26,7 @@ class DNA():
     
     def selection(self, population):
         scores = [(self.fitness(i), i) for i in population]
+        print(scores)
 
 def main():
     target = [1, 0, 0, 1 ,0 ,1 ,1]
