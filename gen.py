@@ -38,12 +38,25 @@ class DNA():
         for i in range(len(population)):
             point = np.random.randint(1, len(self.target) - 1)
             father = random.sample(selected, 2)
-            
+    
             population[i][:point] = father[0][:point]
             population[i][point:] = father[1][point:]
 
-            return population
+        return population
 
+    def mutation(self, population):
+        for i in range(len(population)):
+            if random.random() <= self.mutation_rate:
+                point = random.randint(1, len(self.target) - 1)
+                new_value = np.random.randint(0, 9)
+
+                while new_value == population[i][point]:
+                    new_value = np.random.randint(0, 9)
+
+                population[i][point] = new_value
+                
+        return population   
+                     
 def main():
     target = [1, 0, 0, 1 ,0 ,1 ,1]
     model = DNA(target = target, mutation_rate = 0.02, n_individuals = 15, n_selection= 5, n_generations = 50, verbose= False)
