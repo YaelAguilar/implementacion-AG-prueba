@@ -15,12 +15,19 @@ class DNA():
     
     def create_population(self):
         population = [self.create_individual() for i in range(self.n_individuals)]
-        print(population)
+        return population
+    
+    def fitness(self, individual):
+        fitness = 0
+        for i in range(len(individual)):
+            if individual[i] == self.target[i]:
+                fitness += 1
+        print(fitness)
 
 def main():
     target = [1, 0, 0, 1 ,0 ,1 ,1]
     model = DNA(target = target, mutation_rate = 0.02, n_individuals = 15, n_selection= 5, n_generations = 50, verbose= False)
-    model.create_population()
+    model.fitness(model.create_individual())
 
 if __name__ == "__main__":
     main()
